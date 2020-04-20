@@ -69,12 +69,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Joint.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +99,13 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Robot Models\SwRobot\RobotArm - Arm-1.obj" />
+    <None Include="Robot Models\SwRobot\RobotArm - Arm-2.obj" />
+    <None Include="Robot Models\SwRobot\RobotArm - ArmTwo-1.obj" />
+    <None Include="Robot Models\SwRobot\RobotArm - ArmTwo-2.obj" />
+    <None Include="Robot Models\SwRobot\RobotArm - Base-1.obj" />
+    <None Include="Robot Models\SwRobot\RobotArm - BaseRing-1.obj" />
+    <None Include="Robot Models\SwRobot\RobotArm - Part3^RobotArm-1.obj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

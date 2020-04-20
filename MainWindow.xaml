@@ -31,7 +31,7 @@
             <ToolBar >
                 <Menu>
                     <MenuItem Header="File">
-                        <MenuItem Header="Exit"/>
+                        <MenuItem MouseDoubleClick="MenuItem_MouseDoubleClick"   Header="Exit"/>
                     </MenuItem>
                 </Menu>
             </ToolBar>

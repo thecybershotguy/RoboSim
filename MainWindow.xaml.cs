@@ -15,13 +15,27 @@ using System.Windows.Shapes;
 
 namespace RoboSim
 {
+
+
+
+
     public partial class MainWindow : Window
     {
+
+        Model model;
+
+
         public MainWindow()
         {
             InitializeComponent();
+
+            model = new Model("SwRobot");
+       
         }
 
-      
+        private void MenuItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
     }
 }
