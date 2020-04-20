@@ -1,12 +1,29 @@
 ﻿<Window x:Class="RoboSim.MainWindow"
+        xmlns:HelixToolkit="http://helix-toolkit.org/wpf"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoboSim"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="RoboSim" Height="450" Width="800">
     <Grid>
+        <HelixToolkit:HelixViewport3D x:Name="viewPort" ShowViewCube="False" ShowCoordinateSystem="True">
+
+            <HelixToolkit:HelixViewport3D.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0.5,1">
+                    <GradientStop Color = "Gray" Offset="0"/>
+                    <GradientStop Color = "Gray" Offset="1"/>
+                </LinearGradientBrush>
+                
+            </HelixToolkit:HelixViewport3D.Background>
+
+
+
+        </HelixToolkit:HelixViewport3D>
+      
+        
+        
         
     </Grid>
 </Window>
