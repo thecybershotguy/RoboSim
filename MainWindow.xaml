@@ -8,7 +8,9 @@
         mc:Ignorable="d"
         Title="RoboSim" Height="450" Width="800">
     <Grid>
-        <HelixToolkit:HelixViewport3D x:Name="viewPort" ShowViewCube="False" ShowCoordinateSystem="True">
+        <StackPanel VerticalAlignment="Top" Height="30">
+        </StackPanel>
+        <HelixToolkit:HelixViewport3D VerticalAlignment="Bottom" Height="390" CoordinateSystemHorizontalPosition="Left" ShowCameraTarget="True" x:Name="viewPort" ShowViewCube="False" ShowCoordinateSystem="True">
 
             <HelixToolkit:HelixViewport3D.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0.5,1">
@@ -18,7 +20,7 @@
 
             </HelixToolkit:HelixViewport3D.Background >
 
-            <HelixToolkit:GridLinesVisual3D  Width="1500" Length="1500" Thickness="1.5" MinorDistance="100" MajorDistance="400"  Fill="Black"/>
+            <HelixToolkit:GridLinesVisual3D  Center="0,0,0" Width="1500" Length="1500" Thickness="1.5" MinorDistance="100" MajorDistance="400"  Fill="Black"/>
             
             <HelixToolkit:DefaultLights />
 
