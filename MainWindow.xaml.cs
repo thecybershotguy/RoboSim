@@ -33,6 +33,10 @@ namespace RoboSim
 
             model = new Model("SwRobot");
 
+            link = model.LoadModel();
+
+            viewPort.Children.Add(model.RobotModel);
+
 
         }
 
