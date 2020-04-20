@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 
@@ -10,19 +11,18 @@ namespace RoboSim
 
         public Model3DGroup ModelGroup { get; set; }
 
-        public ModelVisual3D Visual3D { get; set; }
+        public ModelVisual3D RobotModel { get; set; }
 
         public string[] NameofFiles { get; set; }
+
 
         public Model(string BasePath)
         {
             importer = new ModelImporter();
             ModelGroup = new Model3DGroup();
-            Visual3D = new ModelVisual3D();
-            
+            RobotModel = new ModelVisual3D();
+
             FileNames(BasePath);
-
-
         }
 
         private void FileNames(string BasePath)
@@ -31,11 +31,26 @@ namespace RoboSim
 
             NameofFiles = Directory.GetFiles(path);
 
-
-
-
         }
 
+        public List<Joint> LoadModel()
+        {
+            List<Joint> loadedLinks = new List<Joint>();
+
+            for (int i = 0; i < NameofFiles.Length; i++)
+            {
+                loadedLinks.Add(new Joint());
+                loadedLinks[i].modelCad = importer.Load(NameofFiles[i]);
+                ModelGroup.Children.Add(loadedLinks[i].modelCad);
+
+            }
+
+            RobotModel.Content = ModelGroup;
+            
+            return loadedLinks;
+        }
+
+      
 
 
 

@@ -24,18 +24,20 @@ namespace RoboSim
 
         Model model;
 
+        List<Joint> link = null;
+
 
         public MainWindow()
         {
             InitializeComponent();
 
             model = new Model("SwRobot");
-       
+
+
         }
 
-        private void MenuItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
+
+      
+
     }
 }
