@@ -10,8 +10,8 @@
         Title="RoboSim" Height="1080" Width="1920">
 
     <Grid>
-   
-        <HelixToolkit:HelixViewport3D BorderThickness="12" BorderBrush="White"   CoordinateSystemHorizontalPosition="Left" ShowCameraTarget="True" x:Name="viewPort" ShowViewCube="False" ShowCoordinateSystem="True" >
+
+        <HelixToolkit:HelixViewport3D    ShowCameraInfo="False"  BorderThickness="12" BorderBrush="White"   CoordinateSystemHorizontalPosition="Left" ShowCameraTarget="True" x:Name="viewPort" ShowViewCube="False" ShowCoordinateSystem="True" >
 
             <HelixToolkit:HelixViewport3D.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0.5,1">
