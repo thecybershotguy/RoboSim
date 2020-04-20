@@ -15,10 +15,12 @@
                     <GradientStop Color = "Gray" Offset="0"/>
                     <GradientStop Color = "Gray" Offset="1"/>
                 </LinearGradientBrush>
-                
-            </HelixToolkit:HelixViewport3D.Background>
 
+            </HelixToolkit:HelixViewport3D.Background >
 
+            <HelixToolkit:GridLinesVisual3D  Width="1500" Length="1500" Thickness="1.5" MinorDistance="100" MajorDistance="400"  Fill="Black"/>
+            
+            <HelixToolkit:DefaultLights />
 
         </HelixToolkit:HelixViewport3D>
       
