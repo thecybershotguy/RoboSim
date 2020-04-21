@@ -23,9 +23,8 @@ namespace RoboSim
     public partial class MainWindow : Window
     {
 
-        Model model;
-
-        List<Joint> link = null;
+        private readonly Model model;
+        private readonly List<Joint> link = null;
 
 
         public MainWindow()
@@ -45,6 +44,7 @@ namespace RoboSim
 
             viewPort.Children.Add(model.RobotModel);
 
+            
 
         }
 
@@ -58,8 +58,7 @@ namespace RoboSim
             viewPort.Camera.Position = new Point3D(-590.925, 1146.123, 427.042);
         }
 
-
-      
+       
 
     }
 }

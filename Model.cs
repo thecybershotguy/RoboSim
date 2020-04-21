@@ -22,6 +22,8 @@ namespace RoboSim
             ModelGroup = new Model3DGroup();
             RobotModel = new ModelVisual3D();
 
+            
+
             FileNames(BasePath);
         }
 
@@ -46,7 +48,8 @@ namespace RoboSim
             }
 
             RobotModel.Content = ModelGroup;
-            
+            RobotModel.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90));
+
             return loadedLinks;
         }
 
