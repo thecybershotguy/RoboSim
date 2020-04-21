@@ -56,6 +56,8 @@ namespace RoboSim
 
         public void IntialiseValues()
         {
+
+            // Lower Link 
             link[0].AxisX = 0;
             link[0].AxisY = 0;
             link[0].AxisZ = 0;
@@ -66,6 +68,8 @@ namespace RoboSim
             link[0].MaxAngle = 180;
             link[0].MinAngle = -180;
 
+
+            // Lower Link 
             link[1].AxisX = 0;
             link[1].AxisY = 0;
             link[1].AxisZ = 0;
@@ -76,6 +80,7 @@ namespace RoboSim
             link[1].MaxAngle = 180;
             link[1].MinAngle = -180;
 
+            // Upper Link
             link[2].AxisX = 0;
             link[2].AxisY = 0;
             link[2].AxisZ = 0;
@@ -86,6 +91,7 @@ namespace RoboSim
             link[2].MaxAngle = 180;
             link[2].MinAngle = -180;
 
+            // Upper Link
             link[3].AxisX = 0;
             link[3].AxisY = 0;
             link[3].AxisZ = 0;
@@ -96,6 +102,7 @@ namespace RoboSim
             link[3].MaxAngle = 180;
             link[3].MinAngle = -180;
 
+            // Base Link
             link[4].AxisX = 0;
             link[4].AxisY = 0;
             link[4].AxisZ = 0;
@@ -106,16 +113,11 @@ namespace RoboSim
             link[4].MaxAngle = 180;
             link[4].MinAngle = -180;
 
-            link[5].AxisX = 0;
-            link[5].AxisY = 0;
-            link[5].AxisZ = 0;
-            link[5].RotX = 0;
-            link[5].RotY = 0;
-            link[5].RotZ = 0;
-            link[5].Angle = 0;
-            link[5].MaxAngle = 180;
-            link[5].MinAngle = -180;
 
+            // Base Ring - link[5]
+      
+
+            // Clamps for Lower Link
             link[6].AxisX = 0;
             link[6].AxisY = 0;
             link[6].AxisZ = 0;
@@ -126,17 +128,6 @@ namespace RoboSim
             link[6].MaxAngle = 180;
             link[6].MinAngle = -180;
 
-            link[7].AxisX = 0;
-            link[7].AxisY = 0;
-            link[7].AxisZ = 0;
-            link[7].RotX = 0;
-            link[7].RotY = 0;
-            link[7].RotZ = 0;
-            link[7].Angle = 0;
-            link[7].MaxAngle = 180;
-            link[7].MinAngle = -180;
-
-   
 
 
         }
@@ -148,7 +139,9 @@ namespace RoboSim
 
         private void joint_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
+            
+            
+            link[4].modelCad.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1),e.NewValue));
         }
     }
 }
