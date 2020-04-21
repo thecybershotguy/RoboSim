@@ -33,20 +33,6 @@ namespace RoboSim
             SetCamera();
 
 
-
-
-            link[0].AxisX = 0;
-            link[0].AxisY = 0;
-            link[0].AxisZ = 0;
-            link[0].RotX = 0;
-            link[0].RotY = 0;
-            link[0].RotZ = 0;
-            link[0].Angle = 0;
-            link[0].MaxAngle = 180;
-            link[0].MinAngle = -180;
-
-
-
             model = new Model("SwRobot");
 
             link = model.LoadModel();
@@ -66,6 +52,7 @@ namespace RoboSim
             viewPort.Camera.UpDirection = new Vector3D(-0.248,0.481,0.841);
             viewPort.Camera.Position = new Point3D(-590.925, 1146.123, 427.042);
         }
+  
 
         public void IntialiseValues()
         {
@@ -154,7 +141,14 @@ namespace RoboSim
 
         }
 
+        private void viewPort_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            SetCamera();
+        }
 
+        private void joint_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
 
+        }
     }
 }
