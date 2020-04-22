@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf;
 
@@ -22,7 +23,10 @@ namespace RoboSim
             ModelGroup = new Model3DGroup();
             RobotModel = new ModelVisual3D();
 
-            
+            Material material = new DiffuseMaterial(new SolidColorBrush(Colors.Beige));
+            importer.DefaultMaterial = material;
+
+
 
             FileNames(BasePath);
         }
@@ -41,14 +45,35 @@ namespace RoboSim
 
             for (int i = 0; i < NameofFiles.Length; i++)
             {
+                switch (i)
+                {
+                    case 0:
+                        importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Black));
+                        break;
+                    case 4:
+                        importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.DarkGray));
+                        break;
+                    default:
+                        importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Orange));
+                        break;
+
+
+
+                }
+
                 loadedLinks.Add(new Joint());
                 loadedLinks[i].modelCad = importer.Load(NameofFiles[i]);
                 ModelGroup.Children.Add(loadedLinks[i].modelCad);
 
             }
+          
+            
 
             RobotModel.Content = ModelGroup;
             RobotModel.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 360));
+
+            
+
 
             return loadedLinks;
         }

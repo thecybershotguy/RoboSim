@@ -57,6 +57,8 @@ namespace RoboSim
         public void IntialiseValues()
         {
 
+         
+
             // Base - Link [0]
 
 
@@ -81,6 +83,7 @@ namespace RoboSim
             link[2].Angle = 0;
             link[2].MaxAngle = 180;
             link[2].MinAngle = -180;
+            
 
             // Fourth Link
             link[3].AxisX = 1;
