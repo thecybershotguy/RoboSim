@@ -99,37 +99,37 @@ namespace RoboSim
             // Platform = link[4]
         
             // Second Link 
-            link[5].AxisX = 0;
-            link[5].AxisY = 1;
+            link[4].AxisX = 0;
+            link[4].AxisY = 1;
+            link[4].AxisZ = 0;
+            link[4].RotX =  20;
+            link[4].RotY = 100;
+            link[4].RotZ = 340;
+            link[4].Angle = 0;
+            link[4].MaxAngle = 180;
+            link[4].MinAngle = -180;
+
+            // Sixth Link
+            link[5].AxisX = 1;
+            link[5].AxisY = 0;
             link[5].AxisZ = 0;
-            link[5].RotX =  20;
-            link[5].RotY = 100;
-            link[5].RotZ = 340;
+            link[5].RotX = 349;
+            link[5].RotY = 0;
+            link[5].RotZ = 625;
             link[5].Angle = 0;
             link[5].MaxAngle = 180;
             link[5].MinAngle = -180;
 
-            // Sixth Link
-            link[6].AxisX = 1;
-            link[6].AxisY = 0;
+            // Third  Link
+            link[6].AxisX = 0;
+            link[6].AxisY = 1;
             link[6].AxisZ = 0;
-            link[6].RotX = 349;
-            link[6].RotY = 0;
-            link[6].RotZ = 625;
+            link[6].RotX = 15;
+            link[6].RotY = 49;
+            link[6].RotZ = 600;
             link[6].Angle = 0;
             link[6].MaxAngle = 180;
             link[6].MinAngle = -180;
-
-            // Third  Link
-            link[7].AxisX = 0;
-            link[7].AxisY = 1;
-            link[7].AxisZ = 0;
-            link[7].RotX = 15;
-            link[7].RotY = 49;
-            link[7].RotZ = 600;
-            link[7].Angle = 0;
-            link[7].MaxAngle = 180;
-            link[7].MinAngle = -180;
 
 
 
