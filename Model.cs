@@ -45,20 +45,13 @@ namespace RoboSim
 
             for (int i = 0; i < NameofFiles.Length; i++)
             {
-                switch (i)
+                if (i == 0)
                 {
-                    case 0:
-                        importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Black));
-                        break;
-                    case 4:
-                        importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.DarkGray));
-                        break;
-                    default:
-                        importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Orange));
-                        break;
-
-
-
+                    importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Black));
+                }
+                else
+                {
+                    importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Orange));
                 }
 
                 loadedLinks.Add(new Joint());

@@ -103,7 +103,6 @@
     <None Include="Robot Models\Kuka\FifthJoint.obj" />
     <None Include="Robot Models\Kuka\FirstJoint.obj" />
     <None Include="Robot Models\Kuka\FourthJoint.obj" />
-    <None Include="Robot Models\Kuka\Platform.obj" />
     <None Include="Robot Models\Kuka\SecondJoint.obj" />
     <None Include="Robot Models\Kuka\SixthJoint.obj" />
     <None Include="Robot Models\Kuka\ThirdJoint.obj" />
