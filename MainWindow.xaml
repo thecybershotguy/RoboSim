@@ -24,7 +24,7 @@
 
             </HelixToolkit:HelixViewport3D.Background >
 
-            <HelixToolkit:GridLinesVisual3D  Center="0,0,0" Width="1500" Length="1500" Thickness="1.5" MinorDistance="100" MajorDistance="400"  Fill="Black"/>
+            <HelixToolkit:GridLinesVisual3D  Center="0,0,0" Width="15000" Length="15000" Thickness="1.5" MinorDistance="100" MajorDistance="400"  Fill="Black"/>
 
             <HelixToolkit:DefaultLights />
 

@@ -30,10 +30,10 @@ namespace RoboSim
         public MainWindow()
         {
             InitializeComponent();
-            SetCamera();
+            //SetCamera();
 
 
-            model = new Model("SwRobot");
+            model = new Model("Kuka");
 
             link = model.LoadModel();
 
@@ -121,9 +121,9 @@ namespace RoboSim
             link[6].AxisX = 0;
             link[6].AxisY = 0;
             link[6].AxisZ = 0;
-            link[6].RotX = 0;
-            link[6].RotY = 0;
-            link[6].RotZ = 0;
+            link[6].RotX = 3.992684;
+            link[6].RotY = 0.397591;
+            link[6].RotZ = -2.159720;
             link[6].Angle = 0;
             link[6].MaxAngle = 180;
             link[6].MinAngle = -180;
@@ -139,9 +139,14 @@ namespace RoboSim
 
         private void joint_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            
-            
-            link[4].modelCad.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1),e.NewValue));
+
+
+            //link[4].modelCad.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1),e.NewValue),new Point3D(link[4].RotX, link[4].RotY, link[4].RotZ));
+
+
+
+            link[4].modelCad.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), e.NewValue));
+
         }
     }
 }

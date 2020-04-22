@@ -48,7 +48,7 @@ namespace RoboSim
             }
 
             RobotModel.Content = ModelGroup;
-            RobotModel.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90));
+            RobotModel.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 360));
 
             return loadedLinks;
         }
