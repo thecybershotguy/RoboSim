@@ -30,7 +30,7 @@ namespace RoboSim
         public MainWindow()
         {
             InitializeComponent();
-            //SetCamera();
+            SetCamera();
 
 
             model = new Model("Kuka");
@@ -48,85 +48,86 @@ namespace RoboSim
 
             viewPort.RotateGesture = new MouseGesture(MouseAction.RightClick);
             viewPort.PanGesture = new MouseGesture(MouseAction.LeftClick);
-            viewPort.Camera.LookDirection = new Vector3D(590.925,-1146.123,-427.042);
-            viewPort.Camera.UpDirection = new Vector3D(-0.248,0.481,0.841);
-            viewPort.Camera.Position = new Point3D(-590.925, 1146.123, 427.042);
+            viewPort.Camera.LookDirection = new Vector3D(966.788,-2535.089,-2206.779);
+            viewPort.Camera.UpDirection = new Vector3D(-0.074,0.194,0.978);
+            viewPort.Camera.Position = new Point3D(-770.491,2361.411,2370.249);
         }
   
 
         public void IntialiseValues()
         {
 
-            // Lower Link 
-            link[0].AxisX = 0;
-            link[0].AxisY = 0;
-            link[0].AxisZ = 0;
-            link[0].RotX = 0;
-            link[0].RotY = 0;
-            link[0].RotZ = 0;
-            link[0].Angle = 0;
-            link[0].MaxAngle = 180;
-            link[0].MinAngle = -180;
+            // Base - Link [0]
 
 
-            // Lower Link 
-            link[1].AxisX = 0;
-            link[1].AxisY = 0;
-            link[1].AxisZ = 0;
-            link[1].RotX = 0;
-            link[1].RotY = 0;
-            link[1].RotZ = 0;
+            // Fifth Link 
             link[1].Angle = 0;
+            link[1].AxisX = 0;
+            link[1].AxisY = 1;
+            link[1].AxisZ = 0;
+            link[1].RotX = 280;
+            link[1].RotY = 44;
+            link[1].RotZ = 625;
             link[1].MaxAngle = 180;
             link[1].MinAngle = -180;
 
-            // Upper Link
+            // First Link
             link[2].AxisX = 0;
             link[2].AxisY = 0;
-            link[2].AxisZ = 0;
-            link[2].RotX = 0;
-            link[2].RotY = 0;
-            link[2].RotZ = 0;
+            link[2].AxisZ = 1;
+            link[2].RotX = 0;  // Zero
+            link[2].RotY = 0;   // Zero
+            link[2].RotZ = 0;   // Zero
             link[2].Angle = 0;
             link[2].MaxAngle = 180;
             link[2].MinAngle = -180;
 
-            // Upper Link
-            link[3].AxisX = 0;
+            // Fourth Link
+            link[3].AxisX = 1;
             link[3].AxisY = 0;
             link[3].AxisZ = 0;
-            link[3].RotX = 0;
+            link[3].RotX = 267.956158;
             link[3].RotY = 0;
-            link[3].RotZ = 0;
+            link[3].RotZ = 625;
             link[3].Angle = 0;
             link[3].MaxAngle = 180;
             link[3].MinAngle = -180;
 
-            // Base Link
-            link[4].AxisX = 0;
-            link[4].AxisY = 0;
-            link[4].AxisZ = 0;
-            link[4].RotX = 0;
-            link[4].RotY = 0;
-            link[4].RotZ = 0;
-            link[4].Angle = 0;
-            link[4].MaxAngle = 180;
-            link[4].MinAngle = -180;
+            // Platform = link[4]
+        
+            // Second Link 
+            link[5].AxisX = 0;
+            link[5].AxisY = 1;
+            link[5].AxisZ = 0;
+            link[5].RotX =  20;
+            link[5].RotY = 100;
+            link[5].RotZ = 340;
+            link[5].Angle = 0;
+            link[5].MaxAngle = 180;
+            link[5].MinAngle = -180;
 
-
-            // Base Ring - link[5]
-      
-
-            // Clamps for Lower Link
-            link[6].AxisX = 0;
+            // Sixth Link
+            link[6].AxisX = 1;
             link[6].AxisY = 0;
             link[6].AxisZ = 0;
-            link[6].RotX = 3.992684;
-            link[6].RotY = 0.397591;
-            link[6].RotZ = -2.159720;
+            link[6].RotX = 349;
+            link[6].RotY = 0;
+            link[6].RotZ = 625;
             link[6].Angle = 0;
             link[6].MaxAngle = 180;
             link[6].MinAngle = -180;
+
+            // Third  Link
+            link[7].AxisX = 0;
+            link[7].AxisY = 1;
+            link[7].AxisZ = 0;
+            link[7].RotX = 15;
+            link[7].RotY = 49;
+            link[7].RotZ = 600;
+            link[7].Angle = 0;
+            link[7].MaxAngle = 180;
+            link[7].MinAngle = -180;
+
 
 
 
@@ -145,7 +146,7 @@ namespace RoboSim
 
 
 
-            link[4].modelCad.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), e.NewValue));
+            //link[7].modelCad.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), e.NewValue), new Point3D(15.689891, 48.9 ,600.221402));
 
         }
     }
