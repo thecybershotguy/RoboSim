@@ -19,6 +19,7 @@ namespace RoboSim
 
 		public Model3D modelCad { get; set; }
 
+		public double Length { get; set; }
 	}
-
+	
 }
