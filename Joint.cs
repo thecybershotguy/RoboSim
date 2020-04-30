@@ -23,7 +23,7 @@ namespace RoboSim
 
 		public double[] DHparameter;
 
-		public double[] RotationMatrix ;
+		public double[,] RotationMatrix;
 
 
 		

@@ -13,7 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
+
 using System.Windows.Shapes;
+
+
 
 namespace RoboSim
 {
@@ -43,7 +46,7 @@ namespace RoboSim
         public GeometryModel3D geom { get; set; }
         public ModelVisual3D visual { get; set; }
 
-        double hypo = 541;
+     
 
         Transform3DGroup F1;
         Transform3DGroup F2;
@@ -81,17 +84,16 @@ namespace RoboSim
 
             link = model.LoadModel();
             IntialiseValues();
+            UpdateRotationMatrix();
 
-            //link[4].modelCad.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90), new Point3D(link[4].RotX, link[4].RotY, link[4].RotZ));
-            //link[6].modelCad.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), -90), new Point3D(link[6].RotX, link[6].RotY, link[6].RotZ));
+          
 
             viewPort.Children.Add(model.RobotModel);
             viewPort.Children.Add(visual);
             X.Content = "X : " + link[5].modelCad.Bounds.Location;
             Y.Content = "Y : " + link[5].modelCad.Bounds.Y;
             Z.Content = "Z : " + link[5].modelCad.Bounds.Z;
-            //compute_fk();
-
+          
 
 
         }
@@ -216,9 +218,7 @@ namespace RoboSim
             link[5].DHparameter = new double[] { Math.ToRadians(link[5].Angle + 180), 0, 75, 0 };
 
 
-
-       
-
+         
         
 
         }
@@ -322,6 +322,24 @@ namespace RoboSim
 
 
 
+        }
+        
+
+
+        public void UpdateRotationMatrix()
+        {
+            int[] OrderOfJoints = new  int[] {2,4,6,3,1,5 };
+           
+            
+            for (int i = 0; i < OrderOfJoints.Length; i++)
+            {
+                link[OrderOfJoints[i]].RotationMatrix = new double[4, 4] {  { System.Math.Cos(link[OrderOfJoints[i]].DHparameter[0]),(-System.Math.Sin(link[OrderOfJoints[i]].DHparameter[0]) * System.Math.Cos(link[OrderOfJoints[i]].DHparameter[1])),(System.Math.Sin(link[OrderOfJoints[i]].DHparameter[0]) * System.Math.Sin(link[OrderOfJoints[i]].DHparameter[1])), link[OrderOfJoints[i]].DHparameter[3] * System.Math.Cos(link[OrderOfJoints[i]].DHparameter[0]) } ,
+                                                        { System.Math.Sin(link[OrderOfJoints[i]].DHparameter[0]),(System.Math.Cos(link[OrderOfJoints[i]].DHparameter[0]) * System.Math.Cos(link[OrderOfJoints[i]].DHparameter[1])),(-System.Math.Cos(link[OrderOfJoints[i]].DHparameter[0]) * System.Math.Sin(link[OrderOfJoints[i]].DHparameter[1])), link[OrderOfJoints[i]].DHparameter[3] * System.Math.Sin(link[OrderOfJoints[i]].DHparameter[0]) } ,
+                                                        {  0, System.Math.Sin(link[OrderOfJoints[i]].DHparameter[1]) ,System.Math.Cos(link[OrderOfJoints[i]].DHparameter[1]), link[OrderOfJoints[i]].DHparameter[2]},
+                                                        {  0, 0 , 0 , 1 }};
+                 
+            }
+             
         }
 
     }
