@@ -20,6 +20,13 @@ namespace RoboSim
 		public Model3D modelCad { get; set; }
 
 		public double Length { get; set; }
+
+		public double[] DHparameter;
+
+		public double[] RotationMatrix ;
+
+
+		
 	}
 	
 }

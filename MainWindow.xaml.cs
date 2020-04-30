@@ -19,10 +19,23 @@ namespace RoboSim
 {
 
 
+    public class MathCal
+    {
+        public double ToRadians(double angle)
+        {
+            return (angle * Math.PI) / 180;
+        }
+
+
+
+    }
+
 
 
     public partial class MainWindow : Window
     {
+
+        MathCal Math =  new MathCal();
 
         private readonly Model model;
         private readonly List<Joint> link = null;
@@ -49,13 +62,16 @@ namespace RoboSim
         {
             InitializeComponent();
             SetCamera();
+
             
 
+
+            
 
             //Tempory Geometry for testing x y z
             var builder = new MeshBuilder(true, true);
             var position = new Point3D(0, 0, 0);
-            builder.AddSphere(position, 25, 15, 15);
+            builder.AddSphere(position, 5 , 15, 15);
             geom = new GeometryModel3D(builder.ToMesh(), Materials.Brown);
             visual = new ModelVisual3D();
             visual.Content = geom;
@@ -71,7 +87,10 @@ namespace RoboSim
 
             viewPort.Children.Add(model.RobotModel);
             viewPort.Children.Add(visual);
-            compute_fk();
+            X.Content = "X : " + link[5].modelCad.Bounds.Location;
+            Y.Content = "Y : " + link[5].modelCad.Bounds.Y;
+            Z.Content = "Z : " + link[5].modelCad.Bounds.Z;
+            //compute_fk();
 
 
 
@@ -86,12 +105,13 @@ namespace RoboSim
             viewPort.Camera.UpDirection = new Vector3D(-0.074,0.194,0.978);
             viewPort.Camera.Position = new Point3D(-770.491,2361.411,2370.249);
         }
-  
+
 
         public void IntialiseValues()
         {
 
-         
+
+           
 
             // Base - Link [0]
 
@@ -106,7 +126,8 @@ namespace RoboSim
             link[1].RotZ = 625;
             link[1].MaxAngle = 180;
             link[1].MinAngle = -180;
-
+           
+            
             // First Link
             link[2].Length = 215;
             link[2].AxisX = 0;
@@ -120,16 +141,18 @@ namespace RoboSim
             link[2].MinAngle = -180;
             
 
+
             // Fourth Link
             link[3].AxisX = 1;
             link[3].AxisY = 0;
             link[3].AxisZ = 0;
-            link[3].RotX = 267.956158;
+            link[3].RotX = 267.956158;  
             link[3].RotY = 0;
             link[3].RotZ = 625;
             link[3].Angle = 0;
             link[3].MaxAngle = 180;
             link[3].MinAngle = -180;
+           
 
             // Platform = link[4]
 
@@ -138,23 +161,25 @@ namespace RoboSim
             link[4].AxisX = 0;
             link[4].AxisY = 1;
             link[4].AxisZ = 0;
-            link[4].RotX =  20;
+            link[4].RotX = 20;
             link[4].RotY = 100;
             link[4].RotZ = 340;
             link[4].Angle = 0;
             link[4].MaxAngle = 180;
             link[4].MinAngle = -180;
+            
 
             // Sixth Link
             link[5].AxisX = 1;
             link[5].AxisY = 0;
             link[5].AxisZ = 0;
-            link[5].RotX = 349;
+            link[5].RotX = 355;
             link[5].RotY = 0;
             link[5].RotZ = 625;
             link[5].Angle = 0;
             link[5].MaxAngle = 180;
             link[5].MinAngle = -180;
+           
 
             // Third  Link
             link[6].Length = 355;
@@ -167,9 +192,34 @@ namespace RoboSim
             link[6].Angle = 0;
             link[6].MaxAngle = 85;
             link[6].MinAngle = -85;
+            
+
+
+            //Add DH Parameters for each link except base
+                      
+            //      thetha          alpha    d       r        
+
+            //  1   thetha          90      345      20
+            //  2   thetha + 90     0        0      260
+            //  3   thetha          90       0       0
+            //  4   thetha         -90      260      0   
+            //  5   thetha          90       0       0
+            //  6   thetha + 180    0        0       0
 
 
 
+            link[2].DHparameter = new double[] { Math.ToRadians(link[2].Angle), Math.ToRadians(90), 345, 20 };
+            link[4].DHparameter = new double[] { Math.ToRadians(link[4].Angle + 90), 0, 0, 260 };
+            link[6].DHparameter = new double[] { Math.ToRadians(link[6].Angle), Math.ToRadians(90), 0, 20 };
+            link[3].DHparameter = new double[] { Math.ToRadians(link[3].Angle), Math.ToRadians(-90), 260, 0 };
+            link[1].DHparameter = new double[] { Math.ToRadians(link[1].Angle), Math.ToRadians(90), 0, 0 };
+            link[5].DHparameter = new double[] { Math.ToRadians(link[5].Angle + 180), 0, 75, 0 };
+
+
+
+       
+
+        
 
         }
 
@@ -262,6 +312,7 @@ namespace RoboSim
             link[1].modelCad.Transform = F51;
             link[5].modelCad.Transform = F61;
 
+            geom.Transform =  new TranslateTransform3D(link[5].modelCad.Bounds.X, link[5].modelCad.Bounds.Y, link[5].modelCad.Bounds.Z);
 
             X.Content = "X : " + link[5].modelCad.Bounds.X;
             Y.Content = "Y : " +  link[5].modelCad.Bounds.Y;

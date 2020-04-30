@@ -6,6 +6,7 @@ using HelixToolkit.Wpf;
 
 namespace RoboSim
 {
+
     public class Model
     {
         public ModelImporter importer { get; set; }
