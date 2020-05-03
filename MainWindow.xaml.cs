@@ -1,20 +1,10 @@
 ﻿using HelixToolkit.Wpf;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
 
-using System.Windows.Shapes;
 
 
 
@@ -37,8 +27,7 @@ namespace RoboSim
 
     public partial class MainWindow : Window
     {
-
-        MathCal Math =  new MathCal();
+        readonly MathCal Math =  new MathCal();
 
         private readonly Model model;
         private readonly List<Joint> link = null;
@@ -67,10 +56,6 @@ namespace RoboSim
             SetCamera();
 
             
-
-
-            
-
             //Tempory Geometry for testing x y z
             var builder = new MeshBuilder(true, true);
             var position = new Point3D(0, 0, 0);
@@ -83,6 +68,8 @@ namespace RoboSim
             model = new Model("Kuka");
 
             link = model.LoadModel();
+           
+            
             IntialiseValues();
             UpdateRotationMatrix();
 
@@ -90,9 +77,7 @@ namespace RoboSim
 
             viewPort.Children.Add(model.RobotModel);
             viewPort.Children.Add(visual);
-            X.Content = "X : " + link[5].modelCad.Bounds.Location;
-            Y.Content = "Y : " + link[5].modelCad.Bounds.Y;
-            Z.Content = "Z : " + link[5].modelCad.Bounds.Z;
+           
           
 
 
@@ -223,11 +208,7 @@ namespace RoboSim
 
         }
 
-        private void viewPort_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            SetCamera();
-        }
-
+       
         private void joint_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e )
         {
 
@@ -312,7 +293,7 @@ namespace RoboSim
             link[1].modelCad.Transform = F51;
             link[5].modelCad.Transform = F61;
 
-            geom.Transform =  new TranslateTransform3D(link[5].modelCad.Bounds.X, link[5].modelCad.Bounds.Y, link[5].modelCad.Bounds.Z);
+            //geom.Transform =  new TranslateTransform3D(link[5].modelCad.Bounds.X, link[5].modelCad.Bounds.Y, link[5].modelCad.Bounds.Z);
 
             X.Content = "X : " + link[5].modelCad.Bounds.X;
             Y.Content = "Y : " +  link[5].modelCad.Bounds.Y;
@@ -324,11 +305,16 @@ namespace RoboSim
 
         }
         
-
-
         public void UpdateRotationMatrix()
         {
             int[] OrderOfJoints = new  int[] {2,4,6,3,1,5 };
+
+
+            double[,] SumOfEachRotationMatrix = new double[4, 4] { { 1,0,0,0},
+                                                                   {0,1,0,0},
+                                                                   {0,0,1,0},
+                                                                   {0,0,0,1 } };
+
            
             
             for (int i = 0; i < OrderOfJoints.Length; i++)
@@ -337,10 +323,48 @@ namespace RoboSim
                                                         { System.Math.Sin(link[OrderOfJoints[i]].DHparameter[0]),(System.Math.Cos(link[OrderOfJoints[i]].DHparameter[0]) * System.Math.Cos(link[OrderOfJoints[i]].DHparameter[1])),(-System.Math.Cos(link[OrderOfJoints[i]].DHparameter[0]) * System.Math.Sin(link[OrderOfJoints[i]].DHparameter[1])), link[OrderOfJoints[i]].DHparameter[3] * System.Math.Sin(link[OrderOfJoints[i]].DHparameter[0]) } ,
                                                         {  0, System.Math.Sin(link[OrderOfJoints[i]].DHparameter[1]) ,System.Math.Cos(link[OrderOfJoints[i]].DHparameter[1]), link[OrderOfJoints[i]].DHparameter[2]},
                                                         {  0, 0 , 0 , 1 }};
-                 
+
+
+                SumOfEachRotationMatrix[0, 0] = ((SumOfEachRotationMatrix[0, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 0])  + (SumOfEachRotationMatrix[0,1] * link[OrderOfJoints[i]].RotationMatrix[1, 0]) + (SumOfEachRotationMatrix[0, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 0]) + (SumOfEachRotationMatrix[0, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 0]));
+                SumOfEachRotationMatrix[0, 1] = ((SumOfEachRotationMatrix[0, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 1]) + (SumOfEachRotationMatrix[0, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 1]) + (SumOfEachRotationMatrix[0, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 1]) + (SumOfEachRotationMatrix[0, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 1]));
+                SumOfEachRotationMatrix[0, 2] = ((SumOfEachRotationMatrix[0, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 2]) + (SumOfEachRotationMatrix[0, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 2]) + (SumOfEachRotationMatrix[0, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 2]) + (SumOfEachRotationMatrix[0, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 2]));
+                SumOfEachRotationMatrix[0, 3] = ((SumOfEachRotationMatrix[0, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 3]) + (SumOfEachRotationMatrix[0, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 3]) + (SumOfEachRotationMatrix[0, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 3]) + (SumOfEachRotationMatrix[0, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 3]));
+
+                SumOfEachRotationMatrix[1, 0] = ((SumOfEachRotationMatrix[1, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 0]) + (SumOfEachRotationMatrix[1, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 0]) + (SumOfEachRotationMatrix[1, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 0]) + (SumOfEachRotationMatrix[1, 3] * link[OrderOfJoints[i]].RotationMatrix[1, 0]));
+                SumOfEachRotationMatrix[1, 1] = ((SumOfEachRotationMatrix[1, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 1]) + (SumOfEachRotationMatrix[1, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 0]) + (SumOfEachRotationMatrix[1, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 1]) + (SumOfEachRotationMatrix[1, 3] * link[OrderOfJoints[i]].RotationMatrix[1, 1]));
+                SumOfEachRotationMatrix[1, 2] = ((SumOfEachRotationMatrix[1, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 2]) + (SumOfEachRotationMatrix[1, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 2]) + (SumOfEachRotationMatrix[1, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 2]) + (SumOfEachRotationMatrix[1, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 2]));
+                SumOfEachRotationMatrix[1, 3] = ((SumOfEachRotationMatrix[1, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 3]) + (SumOfEachRotationMatrix[1, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 3]) + (SumOfEachRotationMatrix[1, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 3]) + (SumOfEachRotationMatrix[1, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 3]));
+
+                SumOfEachRotationMatrix[2, 0] = ((SumOfEachRotationMatrix[2, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 0]) + (SumOfEachRotationMatrix[2, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 0]) + (SumOfEachRotationMatrix[2, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 0]) + (SumOfEachRotationMatrix[2, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 0]));
+                SumOfEachRotationMatrix[2, 1] = ((SumOfEachRotationMatrix[2, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 1]) + (SumOfEachRotationMatrix[2, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 1]) + (SumOfEachRotationMatrix[2, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 1]) + (SumOfEachRotationMatrix[2, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 1]));
+                SumOfEachRotationMatrix[2, 2] = ((SumOfEachRotationMatrix[2, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 2]) + (SumOfEachRotationMatrix[2, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 2]) + (SumOfEachRotationMatrix[2, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 2]) + (SumOfEachRotationMatrix[2, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 2]));
+                SumOfEachRotationMatrix[2, 3] = ((SumOfEachRotationMatrix[2, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 3]) + (SumOfEachRotationMatrix[2, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 3]) + (SumOfEachRotationMatrix[2, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 3]) + (SumOfEachRotationMatrix[2, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 3]));
+
+                SumOfEachRotationMatrix[3, 0] = ((SumOfEachRotationMatrix[3, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 0]) + (SumOfEachRotationMatrix[3, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 0]) + (SumOfEachRotationMatrix[3, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 0]) + (SumOfEachRotationMatrix[3, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 0]));
+                SumOfEachRotationMatrix[3, 1] = ((SumOfEachRotationMatrix[3, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 1]) + (SumOfEachRotationMatrix[3, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 1]) + (SumOfEachRotationMatrix[3, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 1]) + (SumOfEachRotationMatrix[3, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 1]));
+                SumOfEachRotationMatrix[3, 2] = ((SumOfEachRotationMatrix[3, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 2]) + (SumOfEachRotationMatrix[3, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 2]) + (SumOfEachRotationMatrix[3, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 2]) + (SumOfEachRotationMatrix[3, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 2]));
+                SumOfEachRotationMatrix[3, 3] = ((SumOfEachRotationMatrix[3, 0] * link[OrderOfJoints[i]].RotationMatrix[0, 3]) + (SumOfEachRotationMatrix[3, 1] * link[OrderOfJoints[i]].RotationMatrix[1, 3]) + (SumOfEachRotationMatrix[3, 2] * link[OrderOfJoints[i]].RotationMatrix[2, 3]) + (SumOfEachRotationMatrix[3, 3] * link[OrderOfJoints[i]].RotationMatrix[3, 3]));
+
+
+                
+
+
+
+
+
+
+
             }
+
+
              
         }
+        private void viewPort_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            SetCamera();
+        }
+
 
     }
+
 }
