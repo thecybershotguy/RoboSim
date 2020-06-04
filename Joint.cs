@@ -3,7 +3,7 @@ using System.Windows.Media.Media3D;
 
 namespace RoboSim
 {
-	public class Joint
+	public class Joint 
 	{
 		public double RotX { get; set; }
 		public double RotY { get; set; }

@@ -2,14 +2,13 @@
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using HelixToolkit.Wpf;
 
 namespace RoboSim
 {
 
-    public class Model
+    public class ModelImporter : RobotModel
     {
-        public ModelImporter importer { get; set; }
+        public HelixToolkit.Wpf.ModelImporter Importer { get; set; }
 
         public Model3DGroup ModelGroup { get; set; }
 
@@ -18,14 +17,14 @@ namespace RoboSim
         public string[] NameofFiles { get; set; }
 
 
-        public Model(string BasePath)
+        public ModelImporter(string BasePath)
         {
-            importer = new ModelImporter();
+            Importer = new HelixToolkit.Wpf.ModelImporter();
             ModelGroup = new Model3DGroup();
             RobotModel = new ModelVisual3D();
 
             Material material = new DiffuseMaterial(new SolidColorBrush(Colors.Beige));
-            importer.DefaultMaterial = material;
+            Importer.DefaultMaterial = material;
 
 
 
@@ -48,26 +47,21 @@ namespace RoboSim
             {
                 if (i == 0)
                 {
-                    importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Black));
+                    Importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Black));
                 }
                 else
                 {
-                    importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Orange));
+                    Importer.DefaultMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Orange));
                 }
 
                 loadedLinks.Add(new Joint());
-                loadedLinks[i].modelCad = importer.Load(NameofFiles[i]);
+                loadedLinks[i].modelCad = Importer.Load(NameofFiles[i]);
                 ModelGroup.Children.Add(loadedLinks[i].modelCad);
 
             }
           
-            
-
             RobotModel.Content = ModelGroup;
             RobotModel.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 360));
-
-            
-
 
             return loadedLinks;
         }

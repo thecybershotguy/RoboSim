@@ -11,13 +11,6 @@ using System.Windows.Media.Media3D;
 
 namespace RoboSim
 {
-    public class MathCal
-    {
-        public double ToRadians(double angle)
-        {
-            return (angle * Math.PI) / 180;
-        }
-    }
 
     public partial class MainWindow : Window
     {
@@ -25,10 +18,10 @@ namespace RoboSim
         public int[] _orderOfJoints = new int[] { 2, 4, 6, 3, 1, 5 };
         readonly MathCal _math = new MathCal();
 
-        private readonly Model _model;
+        private readonly ModelImporter _model;
         private readonly List<Joint> _link = null;
 
-        public GeometryModel3D _geom { get; set; }
+        public GeometryModel3D _redBall { get; set; }
         public ModelVisual3D _visual { get; set; }
 
         Transform3DGroup _F1;
@@ -60,12 +53,12 @@ namespace RoboSim
             var builder = new MeshBuilder(true, true);
             var position = new Point3D(0, 0, 0);
             builder.AddSphere(position, 15, 15, 15);
-            _geom = new GeometryModel3D(builder.ToMesh(), Materials.Brown);
+            _redBall = new GeometryModel3D(builder.ToMesh(), Materials.Brown);
             _visual = new ModelVisual3D();
-            _visual.Content = _geom;
+            _visual.Content = _redBall;
 
 
-            _model = new Model("Kuka");
+            _model = new ModelImporter("Kuka");
 
             _link = _model.LoadModel();
 
@@ -194,16 +187,11 @@ namespace RoboSim
             _link[3].Angle = joint4.Value;
             _link[1].Angle = joint5.Value;
             _link[5].Angle = joint6.Value;
-            //UpdateRotationMatrix();
-            Compute_fk();
+            CalculateForwardKinematics();
         }
-        public void Compute_fk()
+        public void CalculateForwardKinematics()
         {
             Vector3D Position = UpdateRotationMatrix();
-
-
-
-
 
             _F1 = new Transform3DGroup();
             _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), _link[2].Angle), new Point3D(_link[2].RotX, _link[2].RotY, _link[2].RotZ));
@@ -252,7 +240,7 @@ namespace RoboSim
             _link[1].modelCad.Transform = _F5;
             _link[5].modelCad.Transform = _F6;
 
-            _geom.Transform = new TranslateTransform3D(Position);
+            _redBall.Transform = new TranslateTransform3D(Position);
             X.Content = "X : " + Position.X;
             Y.Content = "Y : " + Position.Y;
             Z.Content = "Z : " + Position.Z;
