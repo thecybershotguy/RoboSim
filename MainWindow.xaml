@@ -13,8 +13,7 @@
 
     <Grid>
 
-
-        <HelixToolkit:HelixViewport3D  MouseDoubleClick="viewPort_MouseDoubleClick"   BorderThickness="12" BorderBrush="Black"      CoordinateSystemHorizontalPosition="Left" ShowCameraTarget="True" x:Name="viewPort" ShowViewCube="False" ShowCoordinateSystem="True" >
+        <HelixToolkit:HelixViewport3D  MouseDoubleClick="ViewPort_MouseDoubleClick"   BorderThickness="12" BorderBrush="Black"      CoordinateSystemHorizontalPosition="Left" ShowCameraTarget="True" x:Name="viewPort" ShowViewCube="False" ShowCoordinateSystem="True" >
 
             <HelixToolkit:HelixViewport3D.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0.5,1">
@@ -30,50 +29,36 @@
 
         </HelixToolkit:HelixViewport3D>
 
-
-        <Rectangle Fill="#FFFBFBFB" HorizontalAlignment="Left" Height="435" Stroke="Black" VerticalAlignment="Top" Width="336" StrokeThickness="0.5" Margin="10,135,0,0"/>
-
-        <Slider x:Name="joint1" HorizontalAlignment="Left" ValueChanged="joint_ValueChanged" Margin="86,168,0,0" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
-        <Label Content="Joint 1" HorizontalAlignment="Left" Margin="30,160,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="J1Value" HorizontalAlignment="Left" Margin="301,168,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint1}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
-
-        <Label x:Name="X" HorizontalAlignment="Left" Margin="65,510,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10"  Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    /> 
-        <Label x:Name="Y" HorizontalAlignment="Left" Margin="160,510,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
-        <Label x:Name="Z" HorizontalAlignment="Left" Margin="246,510,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10"  Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
-
-        <Slider x:Name="joint2" HorizontalAlignment="Left" Margin="86,223,0,0" ValueChanged="joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
-        <Label Content="Joint 2" HorizontalAlignment="Left" Margin="30,215,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="J2Value" HorizontalAlignment="Left" Margin="296,223,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint2}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
+            <Rectangle Fill="#FFFBFBFB" HorizontalAlignment="Left" Height="435" Stroke="Black" VerticalAlignment="Top" Width="450" StrokeThickness="0.5" Margin="10,135,0,0"/>
 
 
+            <Slider x:Name="joint1" HorizontalAlignment="Left" ValueChanged="Joint_ValueChanged" Margin="86,168,0,0" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
+            <Label Content="Joint 1" HorizontalAlignment="Left" Margin="30,160,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="J1Value" HorizontalAlignment="Left" Margin="301,168,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint1}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
 
-        <Slider x:Name="joint3" HorizontalAlignment="Left" Margin="86,283,0,0" ValueChanged="joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
-        <Label Content="Joint 3" HorizontalAlignment="Left" Margin="30,275,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="J3Value" HorizontalAlignment="Left" Margin="296,283,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint3}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
+            <Slider x:Name="joint2" HorizontalAlignment="Left" Margin="86,223,0,0" ValueChanged="Joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
+            <Label Content="Joint 2" HorizontalAlignment="Left" Margin="30,215,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="J2Value" HorizontalAlignment="Left" Margin="296,223,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint2}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
 
-      <Slider x:Name="joint4" HorizontalAlignment="Left" Margin="86,343,0,0" ValueChanged="joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
-        <Label Content="Joint 4" HorizontalAlignment="Left" Margin="30,335,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="J4Value" HorizontalAlignment="Left" Margin="296,343,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint4}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
+            <Slider x:Name="joint3" HorizontalAlignment="Left" Margin="86,283,0,0" ValueChanged="Joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
+            <Label Content="Joint 3" HorizontalAlignment="Left" Margin="30,275,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="J3Value" HorizontalAlignment="Left" Margin="296,283,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint3}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
 
-        <Slider x:Name="joint5" HorizontalAlignment="Left" Margin="86,403,0,0" ValueChanged="joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
-        <Label Content="Joint 5" HorizontalAlignment="Left" Margin="30,395,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="J5Value" HorizontalAlignment="Left" Margin="296,403,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint5}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
+            <Slider x:Name="joint4" HorizontalAlignment="Left" Margin="86,343,0,0" ValueChanged="Joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
+            <Label Content="Joint 4" HorizontalAlignment="Left" Margin="30,335,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="J4Value" HorizontalAlignment="Left" Margin="296,343,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint4}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
 
-        <Slider x:Name="joint6" HorizontalAlignment="Left" Margin="86,463,0,0" ValueChanged="joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
-        <Label Content="Joint 6" HorizontalAlignment="Left" Margin="30,455,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="J6Value" HorizontalAlignment="Left" Margin="296,463,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint6}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    /> 
+            <Slider x:Name="joint5" HorizontalAlignment="Left" Margin="86,403,0,0" ValueChanged="Joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
+            <Label Content="Joint 5" HorizontalAlignment="Left" Margin="30,395,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="J5Value" HorizontalAlignment="Left" Margin="296,403,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint5}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
 
-        <StackPanel>
-            <ToolBar >
-                <Menu>
-                    <MenuItem Header="File">
-                        <MenuItem  Header="Exit"/>
-                    </MenuItem>
-                </Menu>
-            </ToolBar>
+            <Slider x:Name="joint6" HorizontalAlignment="Left" Margin="86,463,0,0" ValueChanged="Joint_ValueChanged" VerticalAlignment="Top" Width="210"  Maximum="180" Minimum="-180"  LargeChange="0.1" TickFrequency="0.1" Height="22"/>
+            <Label Content="Joint 6" HorizontalAlignment="Left" Margin="30,455,0,0" VerticalAlignment="Top" Width="61" Foreground="Black" FontSize="14" FontWeight="Bold" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="J6Value" HorizontalAlignment="Left" Margin="296,463,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Content="{Binding Value, ElementName=joint6}" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
 
-        </StackPanel>
-
+             <Label x:Name="X" HorizontalAlignment="Left" Margin="65,510,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10"  Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
+             <Label x:Name="Y" HorizontalAlignment="Left" Margin="160,510,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10" Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
+             <Label x:Name="Z" HorizontalAlignment="Left" Margin="246,510,0,0"  VerticalAlignment="Top" Width="50" Foreground="Black" FontSize="10"  Height="22" ContentStringFormat="{}{0:0.##}" VerticalContentAlignment="Center"    />
 
 
     </Grid>

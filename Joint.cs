@@ -1,4 +1,4 @@
-﻿
+﻿using System.Numerics;
 using System.Windows.Media.Media3D;
 
 namespace RoboSim
@@ -25,8 +25,10 @@ namespace RoboSim
 
 		public double[,] RotationMatrix;
 
+		public Matrix4x4 JointMatrix { get; set; }
 
-		
+
+
 	}
 	
 }
