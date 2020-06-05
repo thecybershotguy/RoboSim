@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 
@@ -12,9 +13,9 @@ using System.Windows.Media.Media3D;
 namespace RoboSim
 {
 
-    public partial class MainWindow : Window
+    public partial class SimulatorPage : Page 
     {
-        #region Window Class Properties
+        #region SimulatorPage Class Properties
         public int[] _orderOfJoints = new int[] { 2, 4, 6, 3, 1, 5 };
         readonly MathCal _math = new MathCal();
 
@@ -45,9 +46,8 @@ namespace RoboSim
 
         #endregion
 
-        public MainWindow()
+        public SimulatorPage()
         {
-            InitializeComponent();
             SetCamera();
 
             var builder = new MeshBuilder(true, true);
