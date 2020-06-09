@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 
@@ -13,41 +12,37 @@ using System.Windows.Media.Media3D;
 namespace RoboSim
 {
 
-    public partial class SimulatorPage : Page 
+    public partial class SimulatorPage : Window
     {
         #region SimulatorPage Class Properties
         public int[] _orderOfJoints = new int[] { 2, 4, 6, 3, 1, 5 };
+        public Matrix4x4 _workFrame = new Matrix4x4(1, 0, 0, 0,
+                                                     0, 1, 0, 0,
+                                                     0, 0, 1, 0,
+                                                     0, 0, 0, 1);
+
+        private readonly List<Joint> _link = null;
         readonly MathCal _math = new MathCal();
 
         private readonly ModelImporter _model;
-        private readonly List<Joint> _link = null;
-
-        public GeometryModel3D _redBall { get; set; }
-        public ModelVisual3D _visual { get; set; }
-
         Transform3DGroup _F1;
         Transform3DGroup _F2;
         Transform3DGroup _F3;
         Transform3DGroup _F4;
         Transform3DGroup _F5;
         Transform3DGroup _F6;
-
         RotateTransform3D _R;
-
-        public Transform3DGroup _F7 { get; private set; }
-
         TranslateTransform3D _T;
-
-
-        public Matrix4x4 _workFrame = new Matrix4x4(1, 0, 0, 0,
-                                                     0, 1, 0, 0,
-                                                     0, 0, 1, 0,
-                                                     0, 0, 0, 1);
-
+        public Transform3DGroup _F7 { get; private set; }
+        public GeometryModel3D _redBall { get; set; }
+        public ModelVisual3D _visual { get; set; }
         #endregion
 
         public SimulatorPage()
         {
+            InitializeComponent();
+
+
             SetCamera();
 
             var builder = new MeshBuilder(true, true);
@@ -68,20 +63,68 @@ namespace RoboSim
             viewPort.Children.Add(_visual);
         }
 
-        public void SetCamera()
-        {
 
-            viewPort.RotateGesture = new MouseGesture(MouseAction.RightClick);
-            viewPort.PanGesture = new MouseGesture(MouseAction.LeftClick);
-            viewPort.Camera.LookDirection = new Vector3D(966.788, -2535.089, -2206.779);
-            viewPort.Camera.UpDirection = new Vector3D(-0.074, 0.194, 0.978);
-            viewPort.Camera.Position = new Point3D(-770.491, 2361.411, 2370.249);
+        public void CalculateForwardKinematics()
+        {
+            Vector3D Position = UpdateRotationMatrix();
+
+            _F1 = new Transform3DGroup();
+            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), _link[2].Angle), new Point3D(_link[2].RotX, _link[2].RotY, _link[2].RotZ));
+            _F1.Children.Add(_R);
+
+
+            _F2 = new Transform3DGroup();
+            _T = new TranslateTransform3D(0, 0, 0);
+            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), _link[4].Angle), new Point3D(_link[4].RotX, _link[4].RotY, _link[4].RotZ));
+            _F2.Children.Add(_T);
+            _F2.Children.Add(_R);
+            _F2.Children.Add(_F1);
+
+            _F3 = new Transform3DGroup();
+            _T = new TranslateTransform3D(0, 0, 0);
+            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), _link[6].Angle), new Point3D(_link[6].RotX, _link[6].RotY, _link[6].RotZ));
+            _F3.Children.Add(_T);
+            _F3.Children.Add(_R);
+            _F3.Children.Add(_F2);
+
+            _F4 = new Transform3DGroup();
+            _T = new TranslateTransform3D(0, 0, 0);
+            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), _link[3].Angle), new Point3D(_link[3].RotX, _link[3].RotY, _link[3].RotZ));
+            _F4.Children.Add(_T);
+            _F4.Children.Add(_R);
+            _F4.Children.Add(_F3);
+
+            _F5 = new Transform3DGroup();
+            _T = new TranslateTransform3D(0, 0, 0);
+            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), _link[1].Angle), new Point3D(_link[1].RotX, _link[1].RotY, _link[1].RotZ));
+            _F5.Children.Add(_T);
+            _F5.Children.Add(_R);
+            _F5.Children.Add(_F4);
+
+            _F6 = new Transform3DGroup();
+            _T = new TranslateTransform3D(0, 0, 0);
+            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), _link[5].Angle), new Point3D(_link[5].RotX, _link[5].RotY, _link[5].RotZ));
+            _F6.Children.Add(_T);
+            _F6.Children.Add(_R);
+            _F6.Children.Add(_F5);
+
+            _link[2].modelCad.Transform = _F1;
+            _link[4].modelCad.Transform = _F2;
+            _link[6].modelCad.Transform = _F3;
+            _link[3].modelCad.Transform = _F4;
+            _link[1].modelCad.Transform = _F5;
+            _link[5].modelCad.Transform = _F6;
+
+            _redBall.Transform = new TranslateTransform3D(Position);
+            X.Content = "X : " + Position.X;
+            Y.Content = "Y : " + Position.Y;
+            Z.Content = "Z : " + Position.Z;
         }
+
         public void IntialiseValues()
         {
 
             // Base - Link [0]
-
 
             // Fifth Link 
             _link[1].Angle = 0;
@@ -179,6 +222,16 @@ namespace RoboSim
 
 
         }
+
+        public void SetCamera()
+        {
+
+            viewPort.RotateGesture = new MouseGesture(MouseAction.RightClick);
+            viewPort.PanGesture = new MouseGesture(MouseAction.LeftClick);
+            viewPort.Camera.LookDirection = new Vector3D(966.788, -2535.089, -2206.779);
+            viewPort.Camera.UpDirection = new Vector3D(-0.074, 0.194, 0.978);
+            viewPort.Camera.Position = new Point3D(-770.491, 2361.411, 2370.249);
+        }
         private void Joint_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _link[2].Angle = joint1.Value;
@@ -189,65 +242,7 @@ namespace RoboSim
             _link[5].Angle = joint6.Value;
             CalculateForwardKinematics();
         }
-        public void CalculateForwardKinematics()
-        {
-            Vector3D Position = UpdateRotationMatrix();
-
-            _F1 = new Transform3DGroup();
-            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), _link[2].Angle), new Point3D(_link[2].RotX, _link[2].RotY, _link[2].RotZ));
-            _F1.Children.Add(_R);
-
-
-            _F2 = new Transform3DGroup();
-            _T = new TranslateTransform3D(0, 0, 0);
-            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), _link[4].Angle), new Point3D(_link[4].RotX, _link[4].RotY, _link[4].RotZ));
-            _F2.Children.Add(_T);
-            _F2.Children.Add(_R);
-            _F2.Children.Add(_F1);
-
-            _F3 = new Transform3DGroup();
-            _T = new TranslateTransform3D(0, 0, 0);
-            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), _link[6].Angle), new Point3D(_link[6].RotX, _link[6].RotY, _link[6].RotZ));
-            _F3.Children.Add(_T);
-            _F3.Children.Add(_R);
-            _F3.Children.Add(_F2);
-
-            _F4 = new Transform3DGroup();
-            _T = new TranslateTransform3D(0, 0, 0);
-            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), _link[3].Angle), new Point3D(_link[3].RotX, _link[3].RotY, _link[3].RotZ));
-            _F4.Children.Add(_T);
-            _F4.Children.Add(_R);
-            _F4.Children.Add(_F3);
-
-            _F5 = new Transform3DGroup();
-            _T = new TranslateTransform3D(0, 0, 0);
-            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), _link[1].Angle), new Point3D(_link[1].RotX, _link[1].RotY, _link[1].RotZ));
-            _F5.Children.Add(_T);
-            _F5.Children.Add(_R);
-            _F5.Children.Add(_F4);
-
-            _F6 = new Transform3DGroup();
-            _T = new TranslateTransform3D(0, 0, 0);
-            _R = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), _link[5].Angle), new Point3D(_link[5].RotX, _link[5].RotY, _link[5].RotZ));
-            _F6.Children.Add(_T);
-            _F6.Children.Add(_R);
-            _F6.Children.Add(_F5);
-
-            _link[2].modelCad.Transform = _F1;
-            _link[4].modelCad.Transform = _F2;
-            _link[6].modelCad.Transform = _F3;
-            _link[3].modelCad.Transform = _F4;
-            _link[1].modelCad.Transform = _F5;
-            _link[5].modelCad.Transform = _F6;
-
-            _redBall.Transform = new TranslateTransform3D(Position);
-            X.Content = "X : " + Position.X;
-            Y.Content = "Y : " + Position.Y;
-            Z.Content = "Z : " + Position.Z;
-        }
-
-
-        #region Temporary Rotatary Matrix
+        
         public Vector3D UpdateRotationMatrix()
         {
 
@@ -265,7 +260,7 @@ namespace RoboSim
 
 
                 _link[_orderOfJoints[i]].JointMatrix = new Matrix4x4(
-                                                          (float)Math.Cos(_link[_orderOfJoints[i]].DHparameter[0]), 
+                                                          (float)Math.Cos(_link[_orderOfJoints[i]].DHparameter[0]),
                                                          (float)(-Math.Sin(_link[_orderOfJoints[i]].DHparameter[0]) * Math.Cos(_link[_orderOfJoints[i]].DHparameter[1])),
                                                         (float)(Math.Sin(_link[_orderOfJoints[i]].DHparameter[0]) * Math.Sin(_link[_orderOfJoints[i]].DHparameter[1])),
                                                          (float)(_link[_orderOfJoints[i]].DHparameter[3] * Math.Cos(_link[_orderOfJoints[i]].DHparameter[0])),
@@ -294,7 +289,6 @@ namespace RoboSim
             return new Vector3D(Temporary5.M14, Temporary5.M24, Temporary5.M34);
         }
 
-        #endregion
         private void ViewPort_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             SetCamera();
